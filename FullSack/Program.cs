@@ -80,10 +80,7 @@ namespace FullSack
 
 			app.UseHttpsRedirection();
 
-			if (app.Environment.IsDevelopment())
-			{
-				app.UseCors("CorsDev");
-			}
+			app.UseCors("CorsDev");
 
 			app.UseAuthentication();
 
