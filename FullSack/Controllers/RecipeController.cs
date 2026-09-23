@@ -4,6 +4,7 @@ using FullSack.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 namespace FullSack.Controllers
 {
@@ -31,30 +32,30 @@ namespace FullSack.Controllers
 			}
 			catch (ArgumentException ex)
 			{
-				return BadRequest(ex);
+				return BadRequest(JsonConvert.SerializeObject(ex));
 			}
 			catch (Exception ex)
 			{
-				return StatusCode(500, ex);
+				return StatusCode(500, JsonConvert.SerializeObject(ex));
 			}
 		}
 
 		[HttpGet("{slug}")]
-		public async Task<IActionResult> GetRecipePageContent(
+		public async Task<ActionResult<RecipePageDTO>> GetRecipePageContent(
 			[FromRoute] string slug)
 		{
 			try
 			{
-				var result = this.recipeService.GetRecipeBySlugAsync(slug);
+				var result = await this.recipeService.GetRecipeBySlugAsync(slug);
 				return Ok(result);
 			}
 			catch (ArgumentException ex)
 			{
-				return NotFound(ex);
+				return NotFound(JsonConvert.SerializeObject(ex));
 			}
 			catch (Exception ex)
 			{
-				return StatusCode(500, ex);
+				return StatusCode(500, JsonConvert.SerializeObject(ex));
 			}
 		}
 
@@ -69,15 +70,15 @@ namespace FullSack.Controllers
 			}
 			catch (ArgumentException ex)
 			{
-				return BadRequest(ex);
+				return BadRequest(JsonConvert.SerializeObject(ex));
 			}
 			catch (DbUpdateException ex)
 			{
-				return Conflict(ex);
+				return Conflict(JsonConvert.SerializeObject(ex));
 			}
 			catch (Exception ex)
 			{
-				return StatusCode(500, ex);
+				return StatusCode(500, JsonConvert.SerializeObject(ex));
 			}
 		}
 
@@ -94,15 +95,15 @@ namespace FullSack.Controllers
 			}
 			catch (ArgumentException ex)
 			{
-				return NotFound(ex);
+				return NotFound(JsonConvert.SerializeObject(ex));
 			}
 			catch (DbUpdateException ex)
 			{
-				return Conflict(ex);
+				return Conflict(JsonConvert.SerializeObject(ex));
 			}
 			catch (Exception ex)
 			{
-				return StatusCode(500, ex);
+				return StatusCode(500, JsonConvert.SerializeObject(ex));
 			}
 		}
 
@@ -117,15 +118,15 @@ namespace FullSack.Controllers
 			}
 			catch (ArgumentException ex)
 			{
-				return NotFound(ex);
+				return NotFound(JsonConvert.SerializeObject(ex));
 			}
 			catch (DbUpdateException ex)
 			{
-				return Conflict(ex);
+				return Conflict(JsonConvert.SerializeObject(ex));
 			}
 			catch (Exception ex)
 			{
-				return StatusCode(500, ex);
+				return StatusCode(500, JsonConvert.SerializeObject(ex));
 			}
 		}
 	}
