@@ -1,3 +1,6 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="NuGet.Config" />
+  </Folder>
   <Project Path="FullSack/FullSack.csproj" />
 </Solution>
