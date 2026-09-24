@@ -201,7 +201,7 @@ namespace FullSack.Services
 			{
 				var errors = string.Empty;
 				foreach (var e in userNameResult.Errors)
-				{
+		{
 					errors += $"{e.Code}: {e.Description}\n";
 				}
 				throw new InvalidOperationException(errors);
