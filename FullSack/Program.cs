@@ -86,7 +86,10 @@ namespace FullSack
 
 			app.UseAuthorization();
 
-			app.MapIdentityApi<User>();
+			var account = app.MapGroup("/account");
+
+			account.MapIdentityApi<User>();
+			account.MapIdentityCustomApi<User>();
 
 			app.MapControllers();
 
