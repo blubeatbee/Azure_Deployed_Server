@@ -1,4 +1,3 @@
-using Microsoft.AspNetCore.Authentication.BearerToken;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,24 +20,24 @@ public static class EndpointRouteBuilderExtensions
 			await signInManager.SignOutAsync().ConfigureAwait(false);
 		});
 
-		var accountGroup = routeGroup.MapGroup("/manage").RequireAuthorization();
+		//var accountGroup = routeGroup.MapGroup("/manage").RequireAuthorization();
 
-		accountGroup.MapDelete("/delete", async Task<Results<NoContent, NotFound, InternalServerError>>
-			(ClaimsPrincipal claimsPrincipal, [FromServices] IServiceProvider sp) =>
-		{
-			var userManager = sp.GetRequiredService<UserManager<TUser>>();
-			if (await userManager.GetUserAsync(claimsPrincipal) is not { } user)
-			{
-				return TypedResults.NotFound();
-			}
-			var result = await userManager.DeleteAsync(user);
-			if (!result.Succeeded)
-			{
-				return TypedResults.InternalServerError();
-			}
+		//accountGroup.MapDelete("/delete", async Task<Results<NoContent, NotFound, InternalServerError>>
+		//	(ClaimsPrincipal claimsPrincipal, [FromServices] IServiceProvider sp) =>
+		//{
+		//	var userManager = sp.GetRequiredService<UserManager<TUser>>();
+		//	if (await userManager.GetUserAsync(claimsPrincipal) is not { } user)
+		//	{
+		//		return TypedResults.NotFound();
+		//	}
+		//	var result = await userManager.DeleteAsync(user);
+		//	if (!result.Succeeded)
+		//	{
+		//		return TypedResults.InternalServerError();
+		//	}
 			
-			return TypedResults.NoContent();
-		});
+		//	return TypedResults.NoContent();
+		//});
 
 		return routeGroup;
 	}
