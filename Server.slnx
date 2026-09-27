@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Solution Items/">
+    <File Path="Libs/SemiWare.1.0.0.nupkg" />
     <File Path="NuGet.Config" />
   </Folder>
   <Project Path="FullSack/FullSack.csproj" />
