@@ -76,8 +76,6 @@ namespace FullSack
 			builder.Services.AddScoped<IRecipeService, RecipeService>();
 			builder.Services.AddScoped<IUserService, UserService>();
 
-			builder.Services.AddTransient<StatusCodeHandlerMiddleware>();
-
 			builder.Services.AddControllers();
 			// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 			builder.Services.AddOpenApi();
