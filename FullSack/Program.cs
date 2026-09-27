@@ -5,6 +5,7 @@ using FullSack.Middlewares;
 using FullSack.Persistent;
 using FullSack.Repositories;
 using FullSack.Services;
+using Microsoft.AspNetCore.HttpLogging;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Scalar.AspNetCore;
@@ -20,6 +21,16 @@ namespace FullSack
 
 			#region REGISTER SERVICES TO CONTAINER
 
+			builder.Services.AddHttpLogging(options =>
+			{
+				options.LoggingFields = HttpLoggingFields.RequestPropertiesAndHeaders | HttpLoggingFields.ResponsePropertiesAndHeaders;
+				options.MediaTypeOptions.AddText("application/javascript");
+				options.RequestBodyLogLimit = 4096;
+				options.ResponseBodyLogLimit = 4096;
+				options.CombineLogs = false;
+			});
+
+			
 			builder.Services.AddDbContext<FullSackDbContext>();
 
 			builder.Services.AddIdentityApiEndpoints<User>(options =>
@@ -92,6 +103,7 @@ namespace FullSack
 			// Configure the HTTP request pipeline.
 			if (app.Environment.IsDevelopment())
 			{
+				app.UseHttpLogging();
 				app.MapOpenApi();
 				app.MapScalarApiReference();
 				//app.UseDeveloperExceptionPage();
