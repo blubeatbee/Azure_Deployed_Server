@@ -89,5 +89,20 @@ namespace FullSack.Controllers
 			}
 		}
 
+		[Authorize(Roles = "Admin")]
+		[HttpDelete("manage/deleteUser/{id:guid}")]
+		public async Task<IActionResult> DeleteUser([FromRoute] string id)
+		{
+			try
+			{
+				await this.userService.DeleteUserByIdAsync(id);
+				return NoContent();
+			}
+			catch (Exception ex)
+			{
+				return BadRequest(JsonConvert.SerializeObject(ex));
+			}
+		}
+
 	}
 }
