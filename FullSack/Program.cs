@@ -30,6 +30,16 @@ namespace FullSack
 				options.CombineLogs = false;
 			});
 
+			builder.Services.AddProblemDetails(options =>
+			{
+				options.CustomizeProblemDetails = (context) =>
+				{
+					context.ProblemDetails.Extensions.TryAdd("requestId", context.HttpContext.TraceIdentifier);
+				};
+			});
+
+			builder.Services.AddExceptionHandler<ValidationExceptionHandlerMiddleware>();
+			builder.Services.AddExceptionHandler<GlobalExceptionHandlerMiddleware>();
 			
 			builder.Services.AddDbContext<FullSackDbContext>();
 
@@ -112,7 +122,7 @@ namespace FullSack
 				app.UseHsts();
 			}
 
-			app.UseMiddleware<StatusCodeHandlerMiddleware>();
+			app.UseExceptionHandler();
 
 			app.UseHttpsRedirection();
 
