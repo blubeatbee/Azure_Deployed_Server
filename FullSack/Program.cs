@@ -52,6 +52,13 @@ namespace FullSack
 						.AllowAnyHeader()
 						.AllowCredentials();
 				});
+				options.AddPolicy("CorsProd", policy =>
+				{
+					policy.WithOrigins(builder.Configuration.GetAllowedOrigin("ClientUrl1")!)
+					.WithMethods(HttpMethods.Get, HttpMethods.Post, HttpMethods.Put, HttpMethods.Delete, HttpMethods.Patch)
+					.AllowAnyHeader()
+					.AllowCredentials();
+				});
 			});
 
 			builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
@@ -90,12 +97,23 @@ namespace FullSack
 				//app.UseDeveloperExceptionPage();
 				await app.SeedRolesAndUsersAsync(app.Services.GetRequiredService<IConfiguration>());
 			}
+			if (!app.Environment.IsDevelopment())
+			{
+				app.UseHsts();
+			}
 
 			app.UseMiddleware<StatusCodeHandlerMiddleware>();
 
 			app.UseHttpsRedirection();
 
+			if (app.Environment.IsDevelopment())
+			{
 			app.UseCors("CorsDev");
+			}
+			else
+			{
+				app.UseCors("CorsProd");
+			}
 
 			app.UseAuthentication();
 
