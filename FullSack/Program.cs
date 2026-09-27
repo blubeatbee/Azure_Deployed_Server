@@ -34,6 +34,14 @@ namespace FullSack
 				.AddDefaultTokenProviders()
 				.AddEntityFrameworkStores<FullSackDbContext>();
 
+			builder.Services.ConfigureApplicationCookie(config =>
+			{
+				config.ClaimsIssuer = builder.Configuration.GetValue<string>("Cookie:issuer");
+				config.ExpireTimeSpan = TimeSpan.FromMinutes(2);
+				config.Cookie.SameSite = SameSiteMode.Strict;
+				config.Cookie.SecurePolicy = CookieSecurePolicy.SameAsRequest;
+			});
+
 			builder.Services.AddCors(options =>
 			{
 				options.AddPolicy("CorsDev", policy =>
@@ -47,6 +55,7 @@ namespace FullSack
 
 			builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 			builder.Services.AddScoped<IRecipeService, RecipeService>();
+			builder.Services.AddScoped<IUserService, UserService>();
 
 			builder.Services.AddControllers();
 			// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
