@@ -1,6 +1,7 @@
 using FullSack.Data;
 using FullSack.Entities;
 using FullSack.Extensions;
+using FullSack.Middlewares;
 using FullSack.Persistent;
 using FullSack.Repositories;
 using FullSack.Services;
@@ -57,6 +58,8 @@ namespace FullSack
 			builder.Services.AddScoped<IRecipeService, RecipeService>();
 			builder.Services.AddScoped<IUserService, UserService>();
 
+			builder.Services.AddTransient<StatusCodeHandlerMiddleware>();
+
 			builder.Services.AddControllers();
 			// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 			builder.Services.AddOpenApi();
@@ -84,8 +87,11 @@ namespace FullSack
 			{
 				app.MapOpenApi();
 				app.MapScalarApiReference();
+				//app.UseDeveloperExceptionPage();
 				await app.SeedRolesAndUsersAsync(app.Services.GetRequiredService<IConfiguration>());
 			}
+
+			app.UseMiddleware<StatusCodeHandlerMiddleware>();
 
 			app.UseHttpsRedirection();
 
