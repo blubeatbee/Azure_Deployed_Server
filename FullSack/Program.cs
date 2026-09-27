@@ -114,6 +114,7 @@ namespace FullSack
 				app.UseHttpLogging();
 				app.MapOpenApi();
 				app.MapScalarApiReference();
+				//app.UseDeveloperExceptionPage();
 				await app.SeedRolesAndUsersAsync(app.Services.GetRequiredService<IConfiguration>());
 			}
 			if (!app.Environment.IsDevelopment())
