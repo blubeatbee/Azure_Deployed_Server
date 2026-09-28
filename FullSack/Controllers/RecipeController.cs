@@ -25,62 +25,25 @@ namespace FullSack.Controllers
 			[FromQuery(Name = "page")] int pageIndex,
 			[FromQuery(Name = "size")] int pageSize)
 		{
-			try
-			{
 				var result = await this.recipeService.GetRecipesAsListAsync(pageIndex, pageSize);
 				return Ok(result);
 			}
-			catch (ArgumentException ex)
-			{
-				return BadRequest(JsonConvert.SerializeObject(ex));
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(500, JsonConvert.SerializeObject(ex));
-			}
-		}
 
 		[HttpGet("{slug}")]
 		public async Task<ActionResult<RecipePageDTO>> GetRecipePageContent(
 			[FromRoute] string slug)
 		{
-			try
-			{
 				var result = await this.recipeService.GetRecipeBySlugAsync(slug);
 				return Ok(result);
 			}
-			catch (ArgumentException ex)
-			{
-				return NotFound(JsonConvert.SerializeObject(ex));
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(500, JsonConvert.SerializeObject(ex));
-			}
-		}
 
 		[Authorize]
 		[HttpPost]
 		public async Task<ActionResult<RecipePageDTO>> PostRecipe([FromBody] RecipePutDTO newRecipe)
 		{
-			try
-			{
 				var result = await this.recipeService.AddRecipeAsync(newRecipe);
 				return CreatedAtAction(nameof(GetRecipePageContent), new { id = result.RecipeId }, result);
 			}
-			catch (ArgumentException ex)
-			{
-				return BadRequest(JsonConvert.SerializeObject(ex));
-			}
-			catch (DbUpdateException ex)
-			{
-				return Conflict(JsonConvert.SerializeObject(ex));
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(500, JsonConvert.SerializeObject(ex));
-			}
-		}
 
 		[Authorize]
 		[HttpPut("{id}")]
@@ -88,46 +51,16 @@ namespace FullSack.Controllers
 			[FromRoute] string id,
 			[FromBody] RecipePutDTO updatedRecipe)
 		{
-			try
-			{
 				var result = await this.recipeService.UpdateRecipeByIdAsync(id, updatedRecipe);
 				return Ok(result);
 			}
-			catch (ArgumentException ex)
-			{
-				return NotFound(JsonConvert.SerializeObject(ex));
-			}
-			catch (DbUpdateException ex)
-			{
-				return Conflict(JsonConvert.SerializeObject(ex));
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(500, JsonConvert.SerializeObject(ex));
-			}
-		}
 
 		[Authorize]
 		[HttpDelete("{id}")]
 		public async Task<IActionResult> DeleteRecipe([FromRoute] string id)
 		{
-			try
-			{
 				await this.recipeService.RemoveRecipeByIdAsync(id);
 				return Ok();
 			}
-			catch (ArgumentException ex)
-			{
-				return NotFound(JsonConvert.SerializeObject(ex));
-			}
-			catch (DbUpdateException ex)
-			{
-				return Conflict(JsonConvert.SerializeObject(ex));
-			}
-			catch (Exception ex)
-			{
-				return StatusCode(500, JsonConvert.SerializeObject(ex));
-			}
-		}
 	}
 }
