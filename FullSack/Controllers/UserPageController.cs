@@ -1,7 +1,6 @@
 using FullSack.DTO.User;
 using FullSack.Services;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace FullSack.Controllers
 {
@@ -20,9 +19,9 @@ namespace FullSack.Controllers
 		[HttpGet("getContent/{id}")]
 		public async Task<ActionResult<UserPageGetDTO>> GetUserPageContent([FromRoute] string id)
 		{
-				var userPage = await this.userService.GetUserPageByIdAsync(id);
-				return Ok(userPage);
-			}
+			var userPage = await this.userService.GetUserPageByIdAsync(id);
+			return Ok(userPage);
+		}
 
 	}
 }
