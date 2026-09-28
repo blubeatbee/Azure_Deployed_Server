@@ -1,7 +1,6 @@
 using FullSack.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
 
 namespace FullSack.Controllers
 {
@@ -21,8 +20,8 @@ namespace FullSack.Controllers
 		[HttpDelete("manage/users/delete/{id:guid}")]
 		public async Task<IActionResult> DeleteUser([FromRoute] string id)
 		{
-				await this.userService.DeleteUserByIdAsync(id);
-				return NoContent();
-			}
+			await this.userService.DeleteUserByIdAsync(id);
+			return NoContent();
+		}
 	}
 }
