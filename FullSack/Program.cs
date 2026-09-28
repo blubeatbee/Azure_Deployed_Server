@@ -104,8 +104,7 @@ namespace FullSack
 				Attempt.ToDo(
 					action: context.Database.Migrate,
 					interval: TimeSpan.FromSeconds(2),
-					maxAttempts: 10,
-					retryMessage: "Database is not ready to migrate yet. Retrying...");
+					maxAttempts: 10);
 			}
 
 			// Configure the HTTP request pipeline.
