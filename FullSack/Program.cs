@@ -123,8 +123,6 @@ namespace FullSack
 
 			app.UseExceptionHandler();
 
-			app.UseMiddleware<StatusCodeHandlerMiddleware>();
-
 			app.UseHttpsRedirection();
 
 			if (app.Environment.IsDevelopment())
