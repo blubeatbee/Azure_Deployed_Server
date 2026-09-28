@@ -21,15 +21,8 @@ namespace FullSack.Controllers
 		[HttpDelete("manage/users/delete/{id:guid}")]
 		public async Task<IActionResult> DeleteUser([FromRoute] string id)
 		{
-			try
-			{
 				await this.userService.DeleteUserByIdAsync(id);
 				return NoContent();
 			}
-			catch (Exception ex)
-			{
-				return BadRequest(JsonConvert.SerializeObject(ex));
-			}
-		}
 	}
 }
