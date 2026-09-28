@@ -20,16 +20,9 @@ namespace FullSack.Controllers
 		[HttpGet("getContent/{id}")]
 		public async Task<ActionResult<UserPageGetDTO>> GetUserPageContent([FromRoute] string id)
 		{
-			try
-			{
 				var userPage = await this.userService.GetUserPageByIdAsync(id);
 				return Ok(userPage);
 			}
-			catch (Exception ex)
-			{
-				return NotFound(JsonConvert.SerializeObject(ex));
-			}
-		}
 
 	}
 }
