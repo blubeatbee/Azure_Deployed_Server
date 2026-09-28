@@ -27,7 +27,7 @@ namespace FullSack.Controllers
 			return Ok(result);
 		}
 
-		[HttpGet("{slug}")]
+		[HttpGet("getPage/{slug}")]
 		public async Task<ActionResult<RecipePageDTO>> GetRecipePageContent(
 			[FromRoute] string slug)
 		{
@@ -36,7 +36,7 @@ namespace FullSack.Controllers
 		}
 
 		[Authorize]
-		[HttpPost]
+		[HttpPost("post")]
 		public async Task<ActionResult<RecipePageDTO>> PostRecipe([FromBody] RecipePutDTO newRecipe)
 		{
 			var result = await this.recipeService.AddRecipeAsync(newRecipe);
@@ -44,7 +44,7 @@ namespace FullSack.Controllers
 		}
 
 		[Authorize]
-		[HttpPut("{id}")]
+		[HttpPut("put/{id}")]
 		public async Task<ActionResult<RecipePageDTO>> PutRecipe(
 			[FromRoute] string id,
 			[FromBody] RecipePutDTO updatedRecipe)
@@ -54,7 +54,7 @@ namespace FullSack.Controllers
 		}
 
 		[Authorize]
-		[HttpDelete("{id}")]
+		[HttpDelete("delete/{id}")]
 		public async Task<IActionResult> DeleteRecipe([FromRoute] string id)
 		{
 			await this.recipeService.RemoveRecipeByIdAsync(id);
